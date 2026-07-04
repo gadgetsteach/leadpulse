@@ -1,0 +1,38 @@
+# Node.js
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example
+
+# Build and compiled outputs
+**/dist/
+**/out-tsc/
+**/.angular/
+**/tmp/
+**/bazel-out/
+**/coverage/
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+.settings/
+*.sublime-workspace
+.history/
+
+# OS / System files
+.DS_Store
+Thumbs.db

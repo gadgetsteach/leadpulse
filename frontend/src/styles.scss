@@ -1,0 +1,168 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+:root {
+  --primary-color: #7c3aed;     // Purple/Violet 600
+  --primary-hover: #6d28d9;     // Purple/Violet 700
+  --primary-light: #f5f3ff;     // Purple/Violet 50
+  --primary-glow: rgba(124, 58, 237, 0.15);
+  
+  --dark-bg: #0b0b0e;           // Sleek pitch black/deep violet shadow background
+  --dark-surface: #13131a;      // Dark card surface
+  --dark-surface-hover: #1b1b24;
+  --dark-border: #222230;       // Border separating cards
+  --text-primary: #f3f4f6;
+  --text-muted: #9ca3af;
+  --accent-purple: #c084fc;     // Bright violet accent
+  
+  --glass-bg: rgba(19, 19, 26, 0.75);
+  --glass-border: rgba(192, 132, 252, 0.1);
+  --glass-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+  
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-family: 'Outfit', sans-serif;
+}
+
+$fintel-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+  ),
+  typography: (
+    brand-family: 'Outfit',
+    plain-family: 'Outfit',
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+@include mat.all-component-themes($fintel-theme);
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #e9d5ff 0%, #c084fc 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 12px 0 var(--primary-glow);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px 0 rgba(124, 58, 237, 0.3);
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--dark-border);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--accent-purple);
+  }
+}
+
+.dashboard-card {
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: var(--transition-smooth);
+  
+  &:hover {
+    border-color: rgba(192, 132, 252, 0.3);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6), 0 0 15px 0 rgba(192, 132, 252, 0.05);
+    transform: translateY(-3px);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27273a;
+  border-radius: 4px;
+  
+  &:hover {
+    background: #3f3f5a;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }

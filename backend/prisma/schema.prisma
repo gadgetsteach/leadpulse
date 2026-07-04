@@ -1,0 +1,79 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Business {
+  id           String   @id @default(uuid())
+  name         String
+  slug         String   @unique
+  description  String?
+  logoUrl      String?
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  forms        Form[]
+  leads        Lead[]
+}
+
+model Form {
+  id              String         @id @default(uuid())
+  businessId      String
+  business        Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  title           String
+  description     String?
+  slug            String         @unique
+  isActive        Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  metaTitle       String?
+  metaDescription String?
+  questions       FormQuestion[]
+  leads           Lead[]
+}
+
+model FormQuestion {
+  id           String       @id @default(uuid())
+  formId       String
+  form         Form         @relation(fields: [formId], references: [id], onDelete: Cascade)
+  questionText String
+  questionType String       // 'text', 'textarea', 'select', 'checkbox', 'radio', 'number', 'date'
+  isRequired   Boolean      @default(false)
+  sortOrder    Int          @default(0)
+  options      Json?        // For dropdown, radio, checkbox: string[]
+  createdAt    DateTime     @default(now())
+  answers      LeadAnswer[]
+}
+
+model Lead {
+  id         String       @id @default(uuid())
+  formId     String
+  form       Form         @relation(fields: [formId], references: [id], onDelete: Cascade)
+  businessId String
+  business   Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  status     String       @default("new") // "new", "contacted", "in_progress", "won", "lost"
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  answers    LeadAnswer[]
+  contact    LeadContact?
+}
+
+model LeadAnswer {
+  id         String       @id @default(uuid())
+  leadId     String
+  lead       Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  questionId String
+  question   FormQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  value      String       // Store response as string or JSON string
+}
+
+model LeadContact {
+  leadId String @id
+  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  name   String
+  email  String
+  phone  String
+  notes  String?
+}
