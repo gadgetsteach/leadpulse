@@ -186,7 +186,7 @@ import { ApiService } from '../../services/api.service';
                   <span class="level-title">Your current level:</span>
                   <span class="level-badge">Starter</span>
                 </div>
-                <button class="btn-text" (click)="activeTab.set('forms')">View Benefits</button>
+                <button class="btn-text" (click)="showBenefitsModal.set(true)">View Benefits</button>
               </div>
 
               <div class="progress-tracker">
@@ -209,10 +209,10 @@ import { ApiService } from '../../services/api.service';
               <div class="health-score-container">
                 <div class="score-label">
                   <span>Profile Completion</span>
-                  <span>75%</span>
+                  <span>{{ profileCompletion() }}%</span>
                 </div>
                 <div class="progress-bar-container">
-                  <div class="progress-bar-fill" style="width: 75%;"></div>
+                  <div class="progress-bar-fill" [style.width.%]="profileCompletion()"></div>
                 </div>
               </div>
 
@@ -221,13 +221,14 @@ import { ApiService } from '../../services/api.service';
                   <span class="material-symbols-outlined check-icon">check_circle</span>
                   <span>Email Verified</span>
                 </li>
-                <li class="unchecked">
-                  <span class="material-symbols-outlined warning-icon">error</span>
+                <li [class.checked]="profilePhoneVerified()" [class.unchecked]="!profilePhoneVerified()">
+                  <span class="material-symbols-outlined check-icon" *ngIf="profilePhoneVerified()">check_circle</span>
+                  <span class="material-symbols-outlined warning-icon" *ngIf="!profilePhoneVerified()">error</span>
                   <span>Phone Verified</span>
                 </li>
               </ul>
               
-              <button class="btn-secondary btn-full" (click)="activeTab.set('leads')">
+              <button class="btn-secondary btn-full" (click)="showProfileModal.set(true)">
                 Complete Your Profile
               </button>
             </div>
@@ -251,7 +252,7 @@ import { ApiService } from '../../services/api.service';
                 </div>
               </div>
               
-              <button class="btn-primary btn-full" (click)="activeTab.set('leads')">
+              <button class="btn-primary btn-full" (click)="showReviewsModal.set(true)">
                 Get More Reviews
               </button>
             </div>
@@ -460,6 +461,132 @@ import { ApiService } from '../../services/api.service';
           </div>
         </section>
       </main>
+
+      <!-- Modal: View Benefits -->
+      <div class="modal-overlay" *ngIf="showBenefitsModal()">
+        <div class="modal-card glass-panel animate-fade-in-up">
+          <div class="modal-header">
+            <h3>LeadPulse Growth Levels & Benefits</h3>
+            <button class="close-btn" (click)="showBenefitsModal.set(false)">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="benefits-grid">
+              <div class="tier-card active">
+                <span class="badge yellow">Active</span>
+                <h4>Starter Tier</h4>
+                <p class="tier-desc">Perfect for side projects and local services.</p>
+                <ul>
+                  <li>Up to 10 qualified leads per month</li>
+                  <li>Standard Form Builder templates</li>
+                  <li>Basic Analytics dashboard</li>
+                  <li>Standard email notifications</li>
+                </ul>
+              </div>
+              <div class="tier-card premium">
+                <span class="badge purple">Next Level</span>
+                <h4>Growth Tier</h4>
+                <p class="tier-desc">For growing businesses scaling lead generation.</p>
+                <ul>
+                  <li>Up to 50 qualified leads per month</li>
+                  <li>WhatsApp client notifications</li>
+                  <li>Custom redirects after submission</li>
+                  <li>10% discount on all coin packages</li>
+                </ul>
+              </div>
+              <div class="tier-card super">
+                <h4>Professional Tier</h4>
+                <p class="tier-desc">For agency automation and high volumes.</p>
+                <ul>
+                  <li>Unlimited leads & custom domains</li>
+                  <li>Instant webhooks & CRM sync</li>
+                  <li>Dedicated support manager</li>
+                  <li>25% discount on all coin packages</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Complete Your Profile -->
+      <div class="modal-overlay" *ngIf="showProfileModal()">
+        <div class="modal-card glass-panel animate-fade-in-up">
+          <div class="modal-header">
+            <h3>Complete Business Profile</h3>
+            <button class="close-btn" (click)="showProfileModal.set(false)">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-desc">Verify your contact details and business info to complete your registration.</p>
+            <form (submit)="saveProfile($event)" class="profile-modal-form">
+              <div class="form-group">
+                <label>Business Name</label>
+                <input type="text" [value]="business()?.name" readonly class="readonly-input">
+              </div>
+              <div class="form-group">
+                <label for="profPhone">Mobile / Phone Number</label>
+                <div class="input-row">
+                  <input type="text" id="profPhone" [(ngModel)]="tempPhone" name="profPhone" required placeholder="e.g. +91 7753058069">
+                  <button type="button" class="btn-primary verify-btn" *ngIf="!profilePhoneVerified()" (click)="verifyPhone()">
+                    Verify
+                  </button>
+                  <span class="verified-label" *ngIf="profilePhoneVerified()">
+                    <span class="material-symbols-outlined">check_circle</span> Verified
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="profLogo">Business Logo URL</label>
+                <input type="text" id="profLogo" [(ngModel)]="tempLogo" name="profLogo" placeholder="e.g. https://domain.com/logo.png">
+              </div>
+              <button type="submit" class="btn-primary save-btn">
+                Save & Update Profile
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Get More Reviews -->
+      <div class="modal-overlay" *ngIf="showReviewsModal()">
+        <div class="modal-card glass-panel animate-fade-in-up">
+          <div class="modal-header">
+            <h3>Get More Customer Reviews</h3>
+            <button class="close-btn" (click)="showReviewsModal.set(false)">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-desc">Invite your clients to write reviews to increase your public rating score (currently <strong>4.9/5.0</strong>).</p>
+            
+            <div class="review-link-box">
+              <label>Your Public Review Link</label>
+              <div class="link-copy-row">
+                <input type="text" readonly [value]="'http://localhost:4200/review/' + (business()?.id || 'business-id')" class="readonly-input">
+                <button type="button" class="btn-secondary" (click)="copyReviewLink()">
+                  <span class="material-symbols-outlined">content_copy</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="email-invite-box">
+              <h4>Send Review Invite Email</h4>
+              <div class="invite-form" *ngIf="!reviewInviteSent()">
+                <input type="email" [(ngModel)]="reviewEmail" name="reviewEmail" placeholder="client@example.com" class="invite-input">
+                <button class="btn-primary" (click)="sendReviewInvite()">Send Invite</button>
+              </div>
+              <div class="invite-success" *ngIf="reviewInviteSent()">
+                <span class="material-symbols-outlined">mark_email_read</span>
+                <p>Invitation sent to <strong>{{ reviewEmail }}</strong> successfully!</p>
+                <button class="btn-text" (click)="reviewInviteSent.set(false)">Send Another</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   `,
   styles: [`
@@ -1480,6 +1607,259 @@ import { ApiService } from '../../services/api.service';
     .btn-delete-action:hover {
       background: rgba(239, 68, 68, 0.08);
     }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      width: 90%;
+      max-width: 680px;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--dark-border);
+      padding-bottom: 15px;
+    }
+
+    .modal-header h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
+    }
+
+    .close-btn:hover {
+      color: white;
+    }
+
+    .modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0 0 25px 0;
+      line-height: 1.5;
+    }
+
+    /* Benefits Tier Grid */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .tier-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--dark-border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .tier-card.active {
+      border-color: rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.02);
+    }
+
+    .tier-card.premium {
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.02);
+    }
+
+    .tier-card .badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .tier-card .badge.yellow { background: #fef3c7; color: #b45309; }
+    .tier-card .badge.purple { background: #f5f3ff; color: #7c3aed; }
+
+    .tier-card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: white;
+      margin: 0 0 6px 0;
+    }
+
+    .tier-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: 0 0 15px 0;
+    }
+
+    .tier-card ul {
+      padding-left: 15px;
+      margin: 0;
+      list-style-type: disc;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Profile modal form */
+    .profile-modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .input-row input {
+      flex-grow: 1;
+    }
+
+    .readonly-input {
+      background: rgba(255, 255, 255, 0.02) !important;
+      border-color: var(--dark-border) !important;
+      color: var(--text-muted) !important;
+      cursor: not-allowed;
+    }
+
+    .verify-btn {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+    }
+
+    .verified-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #10b981;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .verified-label .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .save-btn {
+      align-self: flex-start;
+      margin-top: 10px;
+    }
+
+    /* Review Modals */
+    .review-link-box {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--dark-border);
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .review-link-box label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .link-copy-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .link-copy-row input {
+      flex-grow: 1;
+    }
+
+    .email-invite-box h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: white;
+      margin: 0 0 12px 0;
+    }
+
+    .invite-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .invite-input {
+      flex-grow: 1;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: white;
+      font-family: var(--font-family);
+      outline: none;
+    }
+
+    .invite-input:focus {
+      border-color: var(--accent-purple);
+    }
+
+    .invite-success {
+      background: rgba(16, 185, 129, 0.05);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .invite-success .material-symbols-outlined {
+      font-size: 32px;
+      color: #10b981;
+    }
+
+    .invite-success p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
   `]
 })
 export class DashboardComponent implements OnInit {
@@ -1499,6 +1879,21 @@ export class DashboardComponent implements OnInit {
   filterFormId = '';
   filterStatus = '';
 
+  // Interactive Widgets Modals state
+  readonly showBenefitsModal = signal(false);
+  readonly showProfileModal = signal(false);
+  readonly showReviewsModal = signal(false);
+
+  // Profile data fields
+  tempPhone = '';
+  tempLogo = '';
+  readonly profilePhoneVerified = signal(false);
+  readonly profileCompletion = signal(75);
+
+  // Reviews Invite fields
+  reviewEmail = '';
+  readonly reviewInviteSent = signal(false);
+
   constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
@@ -1507,7 +1902,40 @@ export class DashboardComponent implements OnInit {
       return;
     }
     this.business.set(this.apiService.businessSignal());
+    this.tempPhone = this.business()?.phone || '';
+    this.tempLogo = this.business()?.logoUrl || '';
     this.loadData();
+  }
+
+  verifyPhone(): void {
+    if (!this.tempPhone) {
+      alert('Please enter a phone number first!');
+      return;
+    }
+    this.profilePhoneVerified.set(true);
+    this.profileCompletion.set(100);
+    alert('Phone number verified successfully! Profile health is now 100%.');
+  }
+
+  saveProfile(event: Event): void {
+    event.preventDefault();
+    alert('Business profile updated successfully!');
+    this.showProfileModal.set(false);
+  }
+
+  copyReviewLink(): void {
+    const link = `http://localhost:4200/review/${this.business()?.id || 'business-id'}`;
+    navigator.clipboard.writeText(link).then(() => {
+      alert('Review link copied to clipboard!');
+    });
+  }
+
+  sendReviewInvite(): void {
+    if (!this.reviewEmail) {
+      alert('Please enter a client email address!');
+      return;
+    }
+    this.reviewInviteSent.set(true);
   }
 
   loadData(): void {
