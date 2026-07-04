@@ -1,7 +1,7 @@
 {
-  "name": "fintel-backend",
+  "name": "leadpulse-backend",
   "version": "1.0.0",
-  "description": "Backend API for fintel, dynamic lead generation platform",
+  "description": "Backend API for LeadPulse, dynamic lead generation platform",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
