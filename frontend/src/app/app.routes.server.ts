@@ -10,6 +10,18 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server
   },
   {
+    path: 'dashboard/benefits',
+    renderMode: RenderMode.Server
+  },
+  {
+    path: 'dashboard/profile',
+    renderMode: RenderMode.Server
+  },
+  {
+    path: 'dashboard/reviews',
+    renderMode: RenderMode.Server
+  },
+  {
     path: 'p/:page',
     renderMode: RenderMode.Server
   },

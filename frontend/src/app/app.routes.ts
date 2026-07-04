@@ -7,14 +7,24 @@ import { PublicFormComponent } from './pages/public-form/public-form';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password';
 import { StaticPageComponent } from './pages/static-page';
+import { BenefitsComponent } from './pages/benefits/benefits';
+import { ProfileComponent } from './pages/profile/profile';
+import { ReviewsComponent } from './pages/reviews/reviews';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'dashboard/builder/:id', component: FormBuilderComponent },
+  
+  // Guarded Dashboard Routes
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+  { path: 'dashboard/builder/:id', component: FormBuilderComponent, canActivate: [authGuard] },
+  { path: 'dashboard/benefits', component: BenefitsComponent, canActivate: [authGuard] },
+  { path: 'dashboard/profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'dashboard/reviews', component: ReviewsComponent, canActivate: [authGuard] },
+  
   { path: 'f/:slug', component: PublicFormComponent },
   { path: 'p/:page', component: StaticPageComponent },
   { path: '**', redirectTo: '' }
