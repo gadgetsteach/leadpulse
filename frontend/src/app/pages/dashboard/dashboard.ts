@@ -530,6 +530,7 @@ import { ApiService } from '../../services/api.service';
       display: grid;
       grid-template-columns: 1.3fr 0.7fr;
       gap: 25px;
+      margin-top: 30px;
     }
 
     @media (max-width: 900px) {
