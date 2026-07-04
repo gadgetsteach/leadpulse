@@ -376,7 +376,7 @@ export class PublicReviewComponent implements OnInit {
   clientComment = '';
   submitted = signal(false);
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.businessId = this.route.snapshot.paramMap.get('businessId') || '';
