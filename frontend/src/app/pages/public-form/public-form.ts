@@ -525,7 +525,7 @@ export class PublicFormComponent implements OnInit {
         this.rawQuestions.set(res.questions || []);
         
         // Dynamically set Meta tags for SEO ranking
-        this.title.setTitle(res.metaTitle || `${res.title} | fintel`);
+        this.title.setTitle(res.metaTitle || `${res.title} | LeadPulse`);
         this.meta.updateTag({
           name: 'description',
           content: res.metaDescription || `Fill out the dynamic inquiry form for ${res.business?.name}.`

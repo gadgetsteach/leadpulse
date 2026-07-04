@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { register, login, getProfile } from './controllers/auth.controller';
+import { register, login, getProfile, forgotPassword, resetPassword } from './controllers/auth.controller';
 import { createForm, getForms, getFormById, updateForm, deleteForm, getPublicFormBySlug } from './controllers/form.controller';
 import { submitLead, getLeads, getLeadDetails, updateLeadStatus, getAnalytics } from './controllers/lead.controller';
 import { authenticateJWT } from './middlewares/auth.middleware';
@@ -17,6 +17,8 @@ app.use(express.json());
 // Auth routes
 app.post('/api/auth/register', register);
 app.post('/api/auth/login', login);
+app.post('/api/auth/forgot-password', forgotPassword);
+app.post('/api/auth/reset-password', resetPassword);
 app.get('/api/auth/profile', authenticateJWT, getProfile);
 
 // Form routes (Private)

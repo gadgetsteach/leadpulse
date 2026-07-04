@@ -12,8 +12,8 @@ import { Meta, Title } from '@angular/platform-browser';
       <!-- Top Nav -->
       <nav class="nav-bar glass-panel">
         <div class="nav-brand">
-          <span class="material-symbols-outlines logo-icon">insights</span>
-          <span class="logo-text">fintel</span>
+          <span class="material-symbols-outlined logo-icon">insights</span>
+          <span class="logo-text">LeadPulse</span>
         </div>
         <div class="nav-links">
           <a routerLink="/login" class="btn-secondary">Admin Login</a>
@@ -49,7 +49,7 @@ import { Meta, Title } from '@angular/platform-browser';
               <span class="dot yellow"></span>
               <span class="dot green"></span>
             </div>
-            <div class="preview-url">fintel.io/f/home-cleaning</div>
+            <div class="preview-url">leadpulse.app/f/home-cleaning</div>
           </div>
           <div class="preview-body">
             <h3 class="preview-title">Home Cleaning Service Form</h3>
@@ -76,7 +76,7 @@ import { Meta, Title } from '@angular/platform-browser';
 
       <!-- Features Section -->
       <section id="features" class="features-section">
-        <h2 class="section-title">Why Businesses Choose <span class="gradient-text">fintel</span></h2>
+        <h2 class="section-title">Why Businesses Choose <span class="gradient-text">LeadPulse</span></h2>
         <div class="features-grid">
           <div class="dashboard-card">
             <div class="feature-icon-wrapper">
@@ -106,7 +106,7 @@ import { Meta, Title } from '@angular/platform-browser';
 
       <!-- Footer -->
       <footer class="footer">
-        <p>&copy; 2026 fintel Technologies. Built for premium business lead capture.</p>
+        <p>&copy; 2026 LeadPulse Technologies. Built for premium business lead capture.</p>
       </footer>
     </div>
   `,
@@ -376,10 +376,10 @@ export class HomeComponent implements OnInit {
   constructor(private title: Title, private meta: Meta) {}
 
   ngOnInit(): void {
-    this.title.setTitle('fintel | Dynamic Lead Generation Platform');
+    this.title.setTitle('LeadPulse | Business Leads Generator');
     this.meta.updateTag({
       name: 'description',
-      content: 'Fintel allows businesses of any size to deploy dynamic lead-generation forms, configure custom SEO requirements, and manage incoming customer bids in an admin panel.'
+      content: 'LeadPulse allows businesses of any size to deploy dynamic lead-generation forms, configure custom SEO requirements, and manage incoming customer bids in an admin panel.'
     });
   }
 }

@@ -17,14 +17,14 @@ export class ApiService {
 
   private getStoredToken(): string | null {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fintel_token');
+      return localStorage.getItem('leadpulse_token');
     }
     return null;
   }
 
   private getStoredBusiness(): any | null {
     if (typeof window !== 'undefined') {
-      const biz = localStorage.getItem('fintel_business');
+      const biz = localStorage.getItem('leadpulse_business');
       return biz ? JSON.parse(biz) : null;
     }
     return null;
@@ -53,8 +53,8 @@ export class ApiService {
 
   logout(): void {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('fintel_token');
-      localStorage.removeItem('fintel_business');
+      localStorage.removeItem('leadpulse_token');
+      localStorage.removeItem('leadpulse_business');
     }
     this.tokenSignal.set(null);
     this.businessSignal.set(null);
@@ -62,8 +62,8 @@ export class ApiService {
 
   private setSession(token: string, business: any): void {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('fintel_token', token);
-      localStorage.setItem('fintel_business', JSON.stringify(business));
+      localStorage.setItem('leadpulse_token', token);
+      localStorage.setItem('leadpulse_business', JSON.stringify(business));
     }
     this.tokenSignal.set(token);
     this.businessSignal.set(business);
@@ -118,5 +118,13 @@ export class ApiService {
 
   submitPublicLead(body: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/public/leads`, body);
+  }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/auth/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/auth/reset-password`, { token, newPassword });
   }
 }

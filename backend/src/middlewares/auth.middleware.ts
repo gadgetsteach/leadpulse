@@ -10,7 +10,7 @@ export const authenticateJWT = (req: AuthenticatedRequest, res: Response, next: 
 
   if (authHeader) {
     const token = authHeader.split(' ')[1];
-    const secret = process.env.JWT_SECRET || 'fintel_super_secret_jwt_key_2026_purple_m3';
+    const secret = process.env.JWT_SECRET || 'leadpulse_super_secret_jwt_key_2026_purple_m3';
 
     jwt.verify(token, secret, (err, decoded: any) => {
       if (err) {

@@ -14,7 +14,7 @@ import { ApiService } from '../../services/api.service';
       <aside class="sidebar glass-panel">
         <div class="sidebar-brand">
           <span class="material-symbols-outlined logo-icon">insights</span>
-          <span class="logo-text">fintel</span>
+          <span class="logo-text">LeadPulse</span>
         </div>
         
         <div class="business-profile" *ngIf="business()">

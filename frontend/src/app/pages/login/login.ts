@@ -13,7 +13,7 @@ import { ApiService } from '../../services/api.service';
       <div class="login-container glass-panel">
         <div class="login-header">
           <span class="material-symbols-outlined logo-icon">insights</span>
-          <h2>{{ isLogin() ? 'Sign in to fintel' : 'Register your Business' }}</h2>
+          <h2>{{ isLogin() ? 'Sign in to LeadPulse' : 'Register your Business' }}</h2>
           <p>{{ isLogin() ? 'Access your lead dashboard & manage forms' : 'Get custom forms, SEO pages, and lead tracking' }}</p>
         </div>
 
@@ -43,7 +43,10 @@ import { ApiService } from '../../services/api.service';
 
           <!-- Password -->
           <div class="form-group">
-            <label for="password">Password</label>
+            <div class="password-label-row">
+              <label for="password">Password</label>
+              <a routerLink="/forgot-password" class="forgot-pass-link" *ngIf="isLogin()">Forgot Password?</a>
+            </div>
             <div class="input-wrapper">
               <span class="material-symbols-outlined input-icon">lock</span>
               <input type="password" id="password" name="password" [(ngModel)]="password" required placeholder="••••••••">
@@ -143,6 +146,25 @@ import { ApiService } from '../../services/api.service';
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-primary);
+    }
+
+    .password-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .forgot-pass-link {
+      font-size: 0.8rem;
+      color: var(--accent-purple);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition-smooth);
+    }
+
+    .forgot-pass-link:hover {
+      color: white;
+      text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
     }
 
     .input-wrapper {
