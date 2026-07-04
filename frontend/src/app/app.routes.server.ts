@@ -22,6 +22,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server
   },
   {
+    path: 'review/:businessId',
+    renderMode: RenderMode.Server
+  },
+  {
     path: 'p/:page',
     renderMode: RenderMode.Server
   },

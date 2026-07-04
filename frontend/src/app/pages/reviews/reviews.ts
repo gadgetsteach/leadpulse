@@ -74,54 +74,22 @@ import { ApiService } from '../../services/api.service';
           
           <div class="rating-badge-card">
             <div class="stars-row">
-              <span class="material-symbols-outlined filled">star</span>
-              <span class="material-symbols-outlined filled">star</span>
-              <span class="material-symbols-outlined filled">star</span>
-              <span class="material-symbols-outlined filled">star</span>
-              <span class="material-symbols-outlined filled">star</span>
+              <span class="material-symbols-outlined" [class.filled]="s <= avgRating()" *ngFor="let s of [1,2,3,4,5]">star</span>
             </div>
             <div class="score-row">
-              <strong>4.9</strong>
+              <strong>{{ avgRating().toFixed(1) }}</strong>
               <span>Out of 5.0</span>
             </div>
-            <p class="total-reviews">Based on 12 client reviews</p>
+            <p class="total-reviews">Based on {{ reviewsCount() }} client reviews</p>
           </div>
 
           <div class="breakdown-list">
-            <div class="breakdown-row">
-              <span>5 Stars</span>
+            <div class="breakdown-row" *ngFor="let star of [5,4,3,2,1]" [class.muted]="starCount(star) === 0">
+              <span>{{ star }} Stars</span>
               <div class="progress-bar-container">
-                <div class="progress-bar-fill" style="width: 91%;"></div>
+                <div class="progress-bar-fill" [style.width.%]="starPercentage(star)"></div>
               </div>
-              <span>11</span>
-            </div>
-            <div class="breakdown-row">
-              <span>4 Stars</span>
-              <div class="progress-bar-container">
-                <div class="progress-bar-fill" style="width: 9%;"></div>
-              </div>
-              <span>1</span>
-            </div>
-            <div class="breakdown-row muted">
-              <span>3 Stars</span>
-              <div class="progress-bar-container">
-                <div class="progress-bar-fill" style="width: 0%;"></div>
-              </div>
-              <span>0</span>
-            </div>
-            <div class="breakdown-row muted">
-              <span>2 Stars</span>
-              <div class="progress-bar-container">
-                <div class="progress-bar-fill" style="width: 0%;"></div>
-              </div>
-              <span>0</span>
-            </div>
-            <div class="breakdown-row muted">
-              <span>1 Star</span>
-              <div class="progress-bar-container">
-                <div class="progress-bar-fill" style="width: 0%;"></div>
-              </div>
-              <span>0</span>
+              <span>{{ starCount(star) }}</span>
             </div>
           </div>
         </aside>
@@ -427,6 +395,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class ReviewsComponent implements OnInit {
   readonly business = signal<any | null>(null);
+  readonly reviewsList = signal<any[]>([]);
 
   reviewEmail = '';
   readonly reviewInviteSent = signal(false);
@@ -439,6 +408,56 @@ export class ReviewsComponent implements OnInit {
       return;
     }
     this.business.set(this.apiService.businessSignal());
+    this.loadReviews();
+  }
+
+  loadReviews(): void {
+    const businessId = this.business()?.id || 'business-id';
+    const key = `leadpulse_reviews_${businessId}`;
+    const stored = localStorage.getItem(key);
+    
+    if (stored) {
+      this.reviewsList.set(JSON.parse(stored));
+    } else {
+      // Seed default reviews
+      const initial = [
+        { name: 'John Doe', rating: 5, comment: 'Excellent work!' },
+        { name: 'Jane Smith', rating: 5, comment: 'Highly recommended!' },
+        { name: 'Bob Johnson', rating: 4, comment: 'Good service' },
+        { name: 'Alice Williams', rating: 5, comment: 'Quick responses' },
+        { name: 'David Brown', rating: 5, comment: 'Top quality lead filters' },
+        { name: 'Emily Davis', rating: 5, comment: 'Saved us hours of manual screening' },
+        { name: 'Michael Miller', rating: 5, comment: 'Excellent step forms' },
+        { name: 'Sarah Wilson', rating: 5, comment: 'Very clean UI' },
+        { name: 'James Taylor', rating: 5, comment: 'A+ support' },
+        { name: 'Linda Anderson', rating: 5, comment: 'Best in the business' },
+        { name: 'Robert Thomas', rating: 5, comment: 'Highly customizable templates' },
+        { name: 'Patricia Jackson', rating: 5, comment: 'Our conversion rates doubled' }
+      ];
+      localStorage.setItem(key, JSON.stringify(initial));
+      this.reviewsList.set(initial);
+    }
+  }
+
+  avgRating(): number {
+    const list = this.reviewsList();
+    if (!list.length) return 0;
+    const sum = list.reduce((acc, curr) => acc + curr.rating, 0);
+    return sum / list.length;
+  }
+
+  reviewsCount(): number {
+    return this.reviewsList().length;
+  }
+
+  starCount(stars: number): number {
+    return this.reviewsList().filter(r => r.rating === stars).length;
+  }
+
+  starPercentage(stars: number): number {
+    const total = this.reviewsCount();
+    if (!total) return 0;
+    return (this.starCount(stars) / total) * 100;
   }
 
   getReviewLink(): string {

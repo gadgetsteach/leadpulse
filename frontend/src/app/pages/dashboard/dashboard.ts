@@ -240,15 +240,11 @@ import { ApiService } from '../../services/api.service';
               
               <div class="rating-display">
                 <div class="stars-row">
-                  <span class="material-symbols-outlined filled">star</span>
-                  <span class="material-symbols-outlined filled">star</span>
-                  <span class="material-symbols-outlined filled">star</span>
-                  <span class="material-symbols-outlined filled">star</span>
-                  <span class="material-symbols-outlined filled">star</span>
+                  <span class="material-symbols-outlined" [class.filled]="s <= avgRating()" *ngFor="let s of [1,2,3,4,5]">star</span>
                 </div>
                 <div class="rating-score">
-                  <strong>4.9</strong>
-                  <span>from 12 reviews</span>
+                  <strong>{{ avgRating().toFixed(1) }}</strong>
+                  <span>from {{ reviewsCount() }} reviews</span>
                 </div>
               </div>
               
@@ -1503,7 +1499,11 @@ export class DashboardComponent implements OnInit {
   readonly profilePhoneVerified = signal(false);
   readonly profileCompletion = signal(75);
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  // Dynamic reviews metrics
+  readonly reviewsCount = signal(12);
+  readonly avgRating = signal(4.9);
+
+  constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     if (!this.apiService.isAuthenticated()) {
@@ -1517,6 +1517,17 @@ export class DashboardComponent implements OnInit {
     if (verified === 'true') {
       this.profilePhoneVerified.set(true);
       this.profileCompletion.set(100);
+    }
+
+    // Sync reviews metrics from localStorage
+    const bizId = this.business()?.id || 'business-id';
+    const reviewsKey = `leadpulse_reviews_${bizId}`;
+    const storedReviews = localStorage.getItem(reviewsKey);
+    if (storedReviews) {
+      const list = JSON.parse(storedReviews);
+      this.reviewsCount.set(list.length);
+      const sum = list.reduce((acc: number, curr: any) => acc + curr.rating, 0);
+      this.avgRating.set(list.length ? sum / list.length : 0);
     }
 
     this.loadData();
@@ -1642,7 +1653,7 @@ export class DashboardComponent implements OnInit {
       try {
         const parsed = JSON.parse(value);
         if (Array.isArray(parsed)) return parsed.join(', ');
-      } catch (e) {}
+      } catch (e) { }
     }
     return value;
   }

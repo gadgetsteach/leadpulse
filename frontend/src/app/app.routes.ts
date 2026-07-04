@@ -10,6 +10,7 @@ import { StaticPageComponent } from './pages/static-page';
 import { BenefitsComponent } from './pages/benefits/benefits';
 import { ProfileComponent } from './pages/profile/profile';
 import { ReviewsComponent } from './pages/reviews/reviews';
+import { PublicReviewComponent } from './pages/public-review/public-review';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'dashboard/profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'dashboard/reviews', component: ReviewsComponent, canActivate: [authGuard] },
   
+  { path: 'review/:businessId', component: PublicReviewComponent },
   { path: 'f/:slug', component: PublicFormComponent },
   { path: 'p/:page', component: StaticPageComponent },
   { path: '**', redirectTo: '' }
