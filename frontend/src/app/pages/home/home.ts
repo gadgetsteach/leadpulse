@@ -603,7 +603,7 @@ import { FormsModule } from '@angular/forms';
               </li>
               <li>
                 <span class="material-symbols-outlined">call</span>
-                <a href="tel:+918065938728">+91 8065938728</a>
+                <a href="tel:+917753058069">+91 7753058069</a>
               </li>
               <li>
                 <span class="material-symbols-outlined">schedule</span>

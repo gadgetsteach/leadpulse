@@ -73,8 +73,18 @@ import { FormsModule } from '@angular/forms';
             <p class="lead-paragraph">LeadPulse is a next-generation lead capture and CRM pipeline platform designed for service professionals, agencies, and businesses looking to grow.</p>
             
             <div class="content-section">
-              <h2>Our Mission</h2>
-              <p>We believe that capturing business leads shouldn't feel like fishing in the dark. LeadPulse empowers businesses with intelligent, multi-step Q&A questionnaires that screen and qualify prospects before they even reach your inbox. This ensures that you only spend time on leads that convert.</p>
+              <h2>1. Our Mission</h2>
+              <p>We believe that capturing business leads shouldn't feel like fishing in the dark. LeadPulse empowers businesses with intelligent, multi-step Q&A questionnaires that screen and qualify prospects before they even reach your inbox. This ensures that you only spend time on leads that convert, optimizing overall acquisition efficiency.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>2. The Problem with Traditional Forms</h2>
+              <p>Standard website forms have remained unchanged for decades. Massive forms with ten fields at once immediately intimidate visitors, resulting in low conversion rates averaging below 4%. In today's fast-paced digital environment, capturing user attention requires interactive, dynamic experiences that load fast and request information progressively.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>3. Our Solution: Progressive Stepper Flows</h2>
+              <p>LeadPulse solves drop-off by breaking complex forms into micro-stepper Q&A screens. By asking only one question at a time, we maintain user focus and build micro-commitment. This method results in conversion rates of up to 27.4%, dramatically lowering customer acquisition costs for small and large enterprises alike.</p>
             </div>
 
             <div class="content-section card-deck">
@@ -95,9 +105,29 @@ import { FormsModule } from '@angular/forms';
               </div>
             </div>
 
+            <div class="content-section">
+              <h2>4. The Power of Intent Scoring</h2>
+              <p>Our backend parses leads as they come in, rating prospect intent based on responses, timelines, and interaction patterns. This automated qualification ensures that you prioritize premium prospects first. No more wasting hours calling cold leads that only wanted to browse; instead, you focus on ready-to-buy clients.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>5. Customization Tailored for All Niches</h2>
+              <p>Every business operates differently. Whether you are in home cleaning, SaaS, legal consulting, construction, or real estate, LeadPulse forms can be customized. You can select, sort, and add form questions, edit placeholder text, require specific answers, and toggle redirection variables in a few clicks.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>6. Analytics and Growth Channels</h2>
+              <p>LeadPulse features detailed analytics on form starts, drops, and completes. By tracking which specific questions cause users to leave, you can refine your funnel to perfection. These insights let you test different question structures and optimize your marketing budget for maximum return on investment.</p>
+            </div>
+
             <div class="content-section highlight-box">
-              <h3>Why Choose LeadPulse?</h3>
-              <p>Standard static forms convert at a meager 3% to 5%. LeadPulse's interactive, visual stepper flows boast conversion rates of over <strong>27.4%</strong> by engaging users through structured, single-focus question screens.</p>
+              <h3>7. Constant Platform Innovation</h3>
+              <p>We are dedicated to building the most intuitive lead capture engine on the web. Our team constantly releases design upgrades, adds layout options, and maintains robust databases to keep your sales funnel running smoothly 24/7/365.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>8. Partnering for Long-Term Growth</h2>
+              <p>At LeadPulse, we view ourselves as a growth partner for your business. We don't just sell software; we work with you to understand your lead generation goals, streamline acquisition pathways, and supply high-quality pipelines that help your enterprise scale consistently year over year.</p>
             </div>
           </div>
 
@@ -107,23 +137,43 @@ import { FormsModule } from '@angular/forms';
             <p class="last-updated">Last Updated: July 4, 2026</p>
 
             <div class="content-section">
-              <h2>1. Information We Collect</h2>
-              <p>We collect information to provide better services to all our users. This includes:</p>
-              <ul>
-                <li><strong>Account Information:</strong> When you register a business, we collect your name, business name, and email address.</li>
-                <li><strong>Lead Submissions:</strong> Data submitted by users on your public forms (such as names, emails, phone numbers, and answers to your custom questionnaire).</li>
-                <li><strong>Usage Data:</strong> Technical logs, IP addresses, browser types, and interactions with our website.</li>
-              </ul>
+              <h2>1. Agreement and Consent</h2>
+              <p>At LeadPulse, accessible from leadpulse.app, one of our main priorities is the privacy of our visitors and businesses. This Privacy Policy document outlines the types of information collected and recorded by LeadPulse and how we use it. By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
             </div>
 
             <div class="content-section">
-              <h2>2. How We Use Information</h2>
-              <p>We use the collected data to maintain, optimize, and secure your lead capture pipelines. LeadPulse will never sell your leads' data or your business details to third parties.</p>
+              <h2>2. Information We Collect</h2>
+              <p>We collect information to provide better services to all our users. When you register a business, we request account details such as your name, business name, and email address. If you contact us directly, we may receive additional information about you, including the contents of the message and attachments you send us.</p>
             </div>
 
             <div class="content-section">
-              <h2>3. Data Security & Retention</h2>
-              <p>We employ enterprise-grade SSL/TLS encryption for all data in transit and rest. Leads are stored securely in our PostgreSQL databases and are accessible only to authenticated business owners.</p>
+              <h2>3. Lead Submissions Protection</h2>
+              <p>Any data submitted by users on your public forms (such as names, emails, phone numbers, and answers to your custom questionnaire) is stored securely. LeadPulse acts as a data processor for these leads. We will never sell, lease, or distribute your leads' data or your business details to third-party entities.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>4. Log Files and Analytical Data</h2>
+              <p>LeadPulse follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. This data is not linked to any personally identifiable information.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>5. Cookies and Web Beacons</h2>
+              <p>Like any other website, LeadPulse uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and other information.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>6. Security Measures and Certifications</h2>
+              <p>We employ enterprise-grade SSL/TLS encryption for all data in transit and at rest. Leads are stored securely in our PostgreSQL databases and are accessible only to authenticated business owners. We run routine audits to maintain the integrity of our security infrastructure and protect against unauthorized access.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>7. GDPR Data Protection Rights</h2>
+              <p>We want to ensure you are fully aware of all your data protection rights. Every user is entitled to the following: The right to access, the right to rectification, the right to erasure, the right to restrict processing, the right to object to processing, and the right to data portability. If you make a request, we have one month to respond to you.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>8. Data Retention Limits</h2>
+              <p>We retain your personal data and leads' data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your information to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our legal agreements and policies.</p>
             </div>
           </div>
 
@@ -133,23 +183,43 @@ import { FormsModule } from '@angular/forms';
             <p class="last-updated">Last Updated: July 4, 2026</p>
 
             <div class="content-section">
-              <h2>1. Terms of Agreement</h2>
-              <p>By accessing or using LeadPulse, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
+              <h2>1. Acceptance of Terms</h2>
+              <p>By accessing or using LeadPulse, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. These terms apply to all visitors, users, and others who access or use the Service.</p>
             </div>
 
             <div class="content-section">
-              <h2>2. Business Account Responsibilities</h2>
-              <p>You are responsible for safeguarding your login credentials and for all activities that occur under your business account. You must notify us immediately of any unauthorized use or security breach.</p>
+              <h2>2. Use License</h2>
+              <p>Permission is granted to temporarily download one copy of the materials (information or software) on LeadPulse's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not modify or copy the materials.</p>
             </div>
 
             <div class="content-section">
-              <h2>3. Acceptable Use Policy</h2>
-              <p>You agree not to use LeadPulse to build forms that capture sensitive personal information such as credit card details, government identification, or passwords. Any account found violating this policy will be terminated immediately.</p>
+              <h2>3. Business Account Responsibilities</h2>
+              <p>You are responsible for safeguarding your login credentials and for all activities that occur under your business account. You must notify us immediately of any unauthorized use or security breach. LeadPulse will not be liable for any loss or damage arising from your failure to protect your login info.</p>
+            </div>
+
+            <div class="content-section animate-fade-in-up">
+              <h2>4. Acceptable Use Policy</h2>
+              <p>You agree not to use LeadPulse to build forms that capture sensitive personal information such as credit card details, government identification, or passwords. Any account found violating this policy will be terminated immediately, and their lead database will be permanently deleted.</p>
             </div>
 
             <div class="content-section highlight-box warning">
-              <h3>Important Notice</h3>
-              <p>LeadPulse acts solely as a lead capture platform. We do not guarantee the conversion rates or financial viability of any lead captured using our templates.</p>
+              <h3>5. Platform Disclaimer</h3>
+              <p>LeadPulse acts solely as a lead capture platform. We do not guarantee the conversion rates, verification status, or financial viability of any lead captured using our templates. It is the user's responsibility to qualify leads before business transactions.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>6. Intellectual Property Rights</h2>
+              <p>All content, features, and functionality (including but not limited to all information, software, text, displays, images, video, and audio, and the design, selection, and arrangement thereof) are owned by LeadPulse, its licensors, or other providers of such material and are protected by international copyright laws.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>7. Limitations of Liability</h2>
+              <p>In no event shall LeadPulse, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the service.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>8. Governing Law and Policy Revisions</h2>
+              <p>These terms and conditions are governed by and construed in accordance with local regulations, and you submit to the exclusive jurisdiction of the regional courts. We reserve the right to modify these terms at any time. Changes will be posted instantly on this page.</p>
             </div>
           </div>
 
@@ -160,21 +230,42 @@ import { FormsModule } from '@angular/forms';
 
             <div class="content-section">
               <h2>1. Coin Purchases and Billing</h2>
-              <p>LeadPulse operates on a credit-based system (Coins) for unlocking premium features, custom templates, or viewing advanced lead analytics. All coin packages purchased are non-transferable.</p>
+              <p>LeadPulse operates on a credit-based system (Coins) for unlocking premium features, custom templates, or viewing advanced lead analytics. All coin packages purchased are instantly credited to your business account upon payment, allowing immediate utility.</p>
             </div>
 
             <div class="content-section">
-              <h2>2. Refund Eligibility</h2>
-              <p>Since Coins are digital assets that are instantly credited to your business account upon payment, all sales are final. However, refunds may be considered under the following conditions:</p>
-              <ul>
-                <li>Double billing due to a technical error on our payment gateway.</li>
-                <li>System-wide outages that prevented coin utilization for more than 48 consecutive hours.</li>
-              </ul>
+              <h2>2. No-Refund General Rule</h2>
+              <p>Since Coins are digital assets that are instantly credited to your business account upon payment, all sales are final. Unused coin balances cannot be returned, exchanged, or converted back into real-world currency under standard circumstances.</p>
             </div>
 
             <div class="content-section">
-              <h2>3. How to Request a Refund</h2>
-              <p>If you believe you qualify for a refund, please contact us at <strong>support&#64;leadpulse.com</strong> with your Transaction ID and business details within 7 days of purchase. Approved refunds will be credited back to your original payment method within 5-7 business days.</p>
+              <h2>3. Refund Eligibility Exceptions</h2>
+              <p>Refunds or coin adjustments may be considered under the following conditions: Double billing due to a technical error on our payment gateway, or system-wide outages that prevented coin utilization for more than 48 consecutive hours. Refund requests must be made within 7 days of transaction.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>4. Subscription Cancellation Policy</h2>
+              <p>If you are subscribed to a monthly recurring package, you may cancel your membership at any time. Upon cancellation, your account will remain active at its current tier until the end of the billing cycle, and no partial refunds will be issued for unused days.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>5. Account Abuse Penalties</h2>
+              <p>If an account is suspended, restricted, or terminated due to policy violations (such as collecting forbidden sensitive credentials), any unused coin balance or package credits remaining on the account are non-refundable and will be forfeited.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>6. Failed Transaction Assistance</h2>
+              <p>If your bank account was debited but the coins were not credited due to network failure, please contact our support team immediately. We will audit our gateway logs and credit the appropriate coins manually within 24 hours of confirmation.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>7. Third-Party Integrations Refund Policy</h2>
+              <p>Payments made for third-party integrations, such as external CRM plugins, webhook tools, or mailing lists synced with LeadPulse, are subject to the respective provider's terms. LeadPulse is not responsible for refunding third-party charges.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>8. Claims Process and Support</h2>
+              <p>To request a refund review under the exception criteria, email our claims team at <strong>support&#64;leadpulse.com</strong> with your Transaction ID, account email, and receipt. Approved requests will be processed to the original payment method within 5-7 business days.</p>
             </div>
           </div>
 
@@ -225,6 +316,26 @@ import { FormsModule } from '@angular/forms';
               </button>
             </form>
 
+            <div class="content-section">
+              <h2>Support Philosophy</h2>
+              <p>At LeadPulse, we are dedicated to providing support to ensure your lead capturing forms run smoothly and convert efficiently. We believe that clear communication is the foundation of any successful business relationship.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>Technical & Bug Reports</h2>
+              <p>Encountered a bug or need help configuring a stepper flow? Select 'Technical Support' in the contact dropdown. Provide as much detail as possible, including browser details and step-by-step reproduction info, so our engineers can resolve it fast.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>Billing & Coin Package Queries</h2>
+              <p>For questions regarding your coin balance, payment receipt issues, or wallet details, we are here to help. Our billing specialists handle audits and manually resolve transaction drops in a timely manner.</p>
+            </div>
+
+            <div class="content-section">
+              <h2>Custom Design Consultation</h2>
+              <p>Need a specialized stepper flow or question layout that you don't see in our default builder? Reach out to our design team. We offer tailored layouts and integration support to match your brand's unique specifications.</p>
+            </div>
+
             <div class="contact-cards">
               <div class="contact-info-card">
                 <span class="material-symbols-outlined">mail</span>
@@ -237,7 +348,7 @@ import { FormsModule } from '@angular/forms';
                 <span class="material-symbols-outlined">call</span>
                 <div>
                   <h4>Phone Hotline</h4>
-                  <p>+91 8065938728</p>
+                  <p>+91 7753058069</p>
                 </div>
               </div>
               <div class="contact-info-card">
