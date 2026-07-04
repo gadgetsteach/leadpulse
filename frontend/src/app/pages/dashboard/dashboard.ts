@@ -56,86 +56,234 @@ import { ApiService } from '../../services/api.service';
         </header>
 
         <!-- Tab 1: Overview -->
-        <section *ngIf="activeTab() === 'overview'" class="tab-content">
-          <!-- Stats Grid -->
-          <div class="stats-grid">
-            <div class="dashboard-card stat-card">
-              <span class="material-symbols-outlined stat-icon purple">group</span>
-              <div>
-                <p class="stat-label">Total Leads</p>
-                <h2 class="stat-value">{{ analytics()?.totalLeads || 0 }}</h2>
+        <section *ngIf="activeTab() === 'overview'" class="tab-content overview-layout-split">
+          <!-- Left Column: Stats & Tables -->
+          <div class="overview-main-area">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+              <div class="dashboard-card stat-card">
+                <span class="material-symbols-outlined stat-icon purple">group</span>
+                <div>
+                  <p class="stat-label">Total Leads</p>
+                  <h2 class="stat-value">{{ analytics()?.totalLeads || 0 }}</h2>
+                </div>
               </div>
-            </div>
-            
-            <div class="dashboard-card stat-card">
-              <span class="material-symbols-outlined stat-icon green">check_circle</span>
-              <div>
-                <p class="stat-label">Won Leads</p>
-                <h2 class="stat-value">{{ analytics()?.statusCounts?.won || 0 }}</h2>
+              
+              <div class="dashboard-card stat-card">
+                <span class="material-symbols-outlined stat-icon green">check_circle</span>
+                <div>
+                  <p class="stat-label">Won Leads</p>
+                  <h2 class="stat-value">{{ analytics()?.statusCounts?.won || 0 }}</h2>
+                </div>
+              </div>
+
+              <div class="dashboard-card stat-card">
+                <span class="material-symbols-outlined stat-icon yellow">trending_up</span>
+                <div>
+                  <p class="stat-label">Conversion Rate</p>
+                  <h2 class="stat-value">{{ analytics()?.conversionRate || 0 }}%</h2>
+                </div>
+              </div>
+
+              <div class="dashboard-card stat-card">
+                <span class="material-symbols-outlined stat-icon blue">assignment</span>
+                <div>
+                  <p class="stat-label">Active Forms</p>
+                  <h2 class="stat-value">{{ forms().length }}</h2>
+                </div>
               </div>
             </div>
 
-            <div class="dashboard-card stat-card">
-              <span class="material-symbols-outlined stat-icon yellow">trending_up</span>
-              <div>
-                <p class="stat-label">Conversion Rate</p>
-                <h2 class="stat-value">{{ analytics()?.conversionRate || 0 }}%</h2>
+            <!-- Bottom Columns -->
+            <div class="overview-tables-grid">
+              <!-- Recent Leads -->
+              <div class="dashboard-card col-recent">
+                <h3>Recent Leads</h3>
+                <div class="table-container">
+                  <table class="leads-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Form</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let lead of analytics()?.recentLeads" (click)="viewLeadDetails(lead.id)">
+                        <td>{{ lead.contact?.name }}</td>
+                        <td>{{ lead.form?.title }}</td>
+                        <td><span class="status-badge" [ngClass]="lead.status">{{ lead.status }}</span></td>
+                        <td>{{ lead.createdAt | date:'shortDate' }}</td>
+                      </tr>
+                      <tr *ngIf="!analytics()?.recentLeads?.length">
+                        <td colspan="4" class="empty-state">No leads collected yet. Submit your forms to see them here!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Forms Summary -->
+              <div class="dashboard-card col-forms">
+                <h3>Acquisition Channels</h3>
+                <div class="forms-summary-list">
+                  <div class="channel-row" *ngFor="let ch of analytics()?.leadsByForm">
+                    <div class="channel-info">
+                      <span class="channel-title">{{ ch.title }}</span>
+                      <span class="channel-count">{{ ch.count }} leads</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" [style.width.%]="getMaxPercentage(ch.count)"></div>
+                    </div>
+                  </div>
+                  <div *ngIf="!analytics()?.leadsByForm?.length" class="empty-state">No forms created yet.</div>
+                </div>
               </div>
             </div>
 
-            <div class="dashboard-card stat-card">
-              <span class="material-symbols-outlined stat-icon blue">assignment</span>
-              <div>
-                <p class="stat-label">Active Forms</p>
-                <h2 class="stat-value">{{ forms().length }}</h2>
+            <!-- Need Help Section -->
+            <div class="help-section-widget">
+              <h3>Need Help?</h3>
+              <div class="help-cards-grid">
+                <a routerLink="/p/about" class="help-card">
+                  <span class="material-symbols-outlined icon">rocket_launch</span>
+                  <div>
+                    <h4>Starting at LeadPulse.com</h4>
+                    <p>Learn how to capture and score your first leads in minutes.</p>
+                  </div>
+                </a>
+                <a routerLink="/p/refund" class="help-card">
+                  <span class="material-symbols-outlined icon">payments</span>
+                  <div>
+                    <h4>Coins and Billing</h4>
+                    <p>Understand coin usage, pricing discounts, and balance details.</p>
+                  </div>
+                </a>
+                <a routerLink="/p/contact" class="help-card">
+                  <span class="material-symbols-outlined icon">lightbulb</span>
+                  <div>
+                    <h4>Funnel Optimization Tips</h4>
+                    <p>Read best practices on configuring high-conversion question streams.</p>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
 
-          <!-- Bottom Columns -->
-          <div class="overview-grid">
-            <!-- Recent Leads -->
-            <div class="dashboard-card col-recent">
-              <h3>Recent Leads</h3>
-              <div class="table-container">
-                <table class="leads-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Form</th>
-                      <th>Status</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let lead of analytics()?.recentLeads" (click)="viewLeadDetails(lead.id)">
-                      <td>{{ lead.contact?.name }}</td>
-                      <td>{{ lead.form?.title }}</td>
-                      <td><span class="status-badge" [ngClass]="lead.status">{{ lead.status }}</span></td>
-                      <td>{{ lead.createdAt | date:'shortDate' }}</td>
-                    </tr>
-                    <tr *ngIf="!analytics()?.recentLeads?.length">
-                      <td colspan="4" class="empty-state">No leads collected yet. Submit your forms to see them here!</td>
-                    </tr>
-                  </tbody>
-                </table>
+          <!-- Right Column: Sidebar Widgets -->
+          <div class="overview-sidebar-area">
+            <!-- Grow with LeadPulse Card -->
+            <div class="dashboard-card widget-card grow-card">
+              <div class="widget-header">
+                <span class="material-symbols-outlined badge-icon">verified</span>
+                <h3>Grow with LeadPulse!</h3>
+              </div>
+              <p class="widget-desc">Connect with more buyers to unlock additional premium discounts!</p>
+              
+              <div class="level-indicator">
+                <div class="level-label-row">
+                  <span class="level-title">Your current level:</span>
+                  <span class="level-badge">Starter</span>
+                </div>
+                <button class="btn-text" (click)="activeTab.set('forms')">View Benefits</button>
+              </div>
+
+              <div class="progress-tracker">
+                <div class="progress-labels">
+                  <span>Next Level: LeadPulse Growth</span>
+                  <span>2/30 leads</span>
+                </div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" style="width: 6.7%;"></div>
+                </div>
+                <span class="progress-sub">2/30 leads qualified in 30 days</span>
               </div>
             </div>
 
-            <!-- Forms Summary -->
-            <div class="dashboard-card col-forms">
-              <h3>Acquisition Channels</h3>
-              <div class="forms-summary-list">
-                <div class="channel-row" *ngFor="let ch of analytics()?.leadsByForm">
-                  <div class="channel-info">
-                    <span class="channel-title">{{ ch.title }}</span>
-                    <span class="channel-count">{{ ch.count }} leads</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-fill" [style.width.%]="getMaxPercentage(ch.count)"></div>
-                  </div>
+            <!-- Account Health Card -->
+            <div class="dashboard-card widget-card health-card">
+              <h3>Account Health</h3>
+              <p class="widget-desc">A complete profile builds trust and attracts more high-quality leads.</p>
+              
+              <div class="health-score-container">
+                <div class="score-label">
+                  <span>Profile Completion</span>
+                  <span>75%</span>
                 </div>
-                <div *ngIf="!analytics()?.leadsByForm?.length" class="empty-state">No forms created yet.</div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" style="width: 75%;"></div>
+                </div>
+              </div>
+
+              <ul class="health-checklist">
+                <li class="checked">
+                  <span class="material-symbols-outlined check-icon">check_circle</span>
+                  <span>Email Verified</span>
+                </li>
+                <li class="unchecked">
+                  <span class="material-symbols-outlined warning-icon">error</span>
+                  <span>Phone Verified</span>
+                </li>
+              </ul>
+              
+              <button class="btn-secondary btn-full" (click)="activeTab.set('leads')">
+                Complete Your Profile
+              </button>
+            </div>
+
+            <!-- Your Reviews Card -->
+            <div class="dashboard-card widget-card reviews-card">
+              <h3>Your Reviews</h3>
+              <p class="widget-desc">Your public reputation helps build client confidence.</p>
+              
+              <div class="rating-display">
+                <div class="stars-row">
+                  <span class="material-symbols-outlined filled">star</span>
+                  <span class="material-symbols-outlined filled">star</span>
+                  <span class="material-symbols-outlined filled">star</span>
+                  <span class="material-symbols-outlined filled">star</span>
+                  <span class="material-symbols-outlined filled">star</span>
+                </div>
+                <div class="rating-score">
+                  <strong>4.9</strong>
+                  <span>from 12 reviews</span>
+                </div>
+              </div>
+              
+              <button class="btn-primary btn-full" (click)="activeTab.set('leads')">
+                Get More Reviews
+              </button>
+            </div>
+
+            <!-- LeadPulse Mobile App Card -->
+            <div class="dashboard-card widget-card app-promo-card">
+              <div class="widget-header">
+                <span class="material-symbols-outlined badge-icon">smartphone</span>
+                <h3>LeadPulse Mobile App</h3>
+              </div>
+              <p class="widget-desc">Get the official app for real-time lead notifications and manage your pipeline on the go.</p>
+              
+              <div class="download-buttons">
+                <a href="#" class="store-btn google-play" (click)="$event.preventDefault()">
+                  <span class="material-symbols-outlined">play_store</span>
+                  <div class="store-text">
+                    <span class="sub-text">GET IT ON</span>
+                    <span class="main-text">Google Play</span>
+                  </div>
+                </a>
+                <a href="#" class="store-btn app-store" (click)="$event.preventDefault()">
+                  <span class="material-symbols-outlined">phone_iphone</span>
+                  <div class="store-text">
+                    <span class="sub-text">Download on the</span>
+                    <span class="main-text">App Store</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="pricing-notice">
+                <span class="material-symbols-outlined alert-icon">info</span>
+                <p>Always purchase your coin packages on the website. App store transaction fees make web coins <strong>25% cheaper</strong>.</p>
               </div>
             </div>
           </div>
@@ -526,17 +674,377 @@ import { ApiService } from '../../services/api.service';
       margin: 0;
     }
 
-    .overview-grid {
+    /* Tab: Overview Split Layout */
+    .overview-layout-split {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 25px;
+      align-items: start;
+    }
+
+    .overview-main-area {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .overview-tables-grid {
       display: grid;
       grid-template-columns: 1.3fr 0.7fr;
       gap: 25px;
-      margin-top: 30px;
     }
 
-    @media (max-width: 900px) {
-      .overview-grid {
+    .overview-sidebar-area {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    @media (max-width: 1250px) {
+      .overview-layout-split {
         grid-template-columns: 1fr;
       }
+    }
+
+    @media (max-width: 850px) {
+      .overview-tables-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Seller/Widget Cards */
+    .widget-card {
+      padding: 24px;
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .widget-header h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      margin: 0;
+    }
+
+    .widget-header .badge-icon {
+      font-size: 24px;
+      color: var(--accent-purple);
+    }
+
+    .widget-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0 0 16px 0;
+    }
+
+    /* Grow with LeadPulse Indicators */
+    .level-indicator {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dark-border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .level-label-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .level-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .level-badge {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #b45309; /* Warm starter gold */
+      background: #fef3c7;
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+
+    .btn-text {
+      background: transparent;
+      border: none;
+      color: var(--accent-purple);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-text:hover {
+      text-decoration: underline;
+      color: white;
+    }
+
+    .progress-tracker {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--dark-border);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-purple) 100%);
+      border-radius: 4px;
+    }
+
+    .progress-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Account Health widget */
+    .health-score-container {
+      margin-bottom: 20px;
+    }
+
+    .score-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .health-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .health-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .health-checklist li .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    .health-checklist li.checked {
+      color: white;
+    }
+
+    .health-checklist li.checked .check-icon {
+      color: #10b981;
+    }
+
+    .health-checklist li.unchecked {
+      color: var(--text-muted);
+    }
+
+    .health-checklist li.unchecked .warning-icon {
+      color: #f59e0b;
+    }
+
+    .btn-full {
+      width: 100%;
+      justify-content: center;
+      font-size: 0.85rem !important;
+      padding: 8px 16px !important;
+    }
+
+    /* Reviews Widget */
+    .rating-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--dark-border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .stars-row {
+      display: flex;
+      gap: 4px;
+    }
+
+    .stars-row .material-symbols-outlined.filled {
+      color: #f59e0b;
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .rating-score {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .rating-score strong {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .rating-score span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Mobile App Promo */
+    .download-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: white;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .store-btn:hover {
+      border-color: var(--accent-purple);
+      background: #111111;
+      transform: translateY(-1px);
+    }
+
+    .store-btn .material-symbols-outlined {
+      font-size: 28px;
+    }
+
+    .store-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .store-text .sub-text {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .store-text .main-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .pricing-notice {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .pricing-notice .alert-icon {
+      font-size: 18px;
+      color: #60a5fa;
+      margin-top: 2px;
+    }
+
+    .pricing-notice p {
+      margin: 0;
+      font-size: 0.75rem;
+      color: #93c5fd;
+      line-height: 1.4;
+    }
+
+    /* Help Cards Widget (Bottom Main Content) */
+    .help-section-widget {
+      margin-top: 15px;
+    }
+
+    .help-section-widget h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+    }
+
+    .help-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .help-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-border);
+      border-radius: 10px;
+      padding: 18px;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .help-card:hover {
+      border-color: rgba(192, 132, 252, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .help-card .icon {
+      font-size: 24px;
+      color: var(--accent-purple);
+      margin-top: 2px;
+    }
+
+    .help-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+      margin: 0 0 4px 0;
+    }
+
+    .help-card p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin: 0;
     }
 
     .col-recent h3, .col-forms h3 {

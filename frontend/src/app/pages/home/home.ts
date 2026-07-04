@@ -557,16 +557,70 @@ import { FormsModule } from '@angular/forms';
 
       <!-- Footer -->
       <footer class="footer">
-        <div class="footer-links">
-          <a routerLink="/" class="footer-brand">
-            <span class="material-symbols-outlined logo-icon">insights</span>
-            LeadPulse
-          </a>
-          <div class="links-row">
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a routerLink="/login">Admin CRM Portal</a>
-            <a href="#">Privacy Policy</a>
+        <div class="footer-grid">
+          <!-- Col 1: Brand -->
+          <div class="footer-col brand-col">
+            <a routerLink="/" class="footer-brand">
+              <span class="material-symbols-outlined logo-icon">insights</span>
+              LeadPulse
+            </a>
+            <p class="brand-desc">Next-Gen lead capture & CRM analytics platform. Connect with high-converting clients through structured stepper questionnaire flows. Simple, fast, and secure.</p>
+            <div class="quick-links-group">
+              <a routerLink="/p/about">About Us</a>
+              <a routerLink="/p/contact">Careers</a>
+            </div>
+          </div>
+
+          <!-- Col 2: For Businesses -->
+          <div class="footer-col">
+            <h4>For Businesses</h4>
+            <ul class="footer-list">
+              <li><a href="#features">How It Works</a></li>
+              <li><a routerLink="/login">Admin CRM Portal</a></li>
+              <li><a routerLink="/p/about">Features Showcase</a></li>
+              <li><a routerLink="/p/contact">Help Centre</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Legal & Resources -->
+          <div class="footer-col">
+            <h4>Resources & Legal</h4>
+            <ul class="footer-list">
+              <li><a routerLink="/p/privacy">Privacy Policy</a></li>
+              <li><a routerLink="/p/terms">Terms of Service</a></li>
+              <li><a routerLink="/p/refund">Return & Refund Policy</a></li>
+              <li><a routerLink="/p/contact">API Reference</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 4: Contact & Support -->
+          <div class="footer-col">
+            <h4>Connect with Us</h4>
+            <ul class="footer-list contact-list">
+              <li>
+                <span class="material-symbols-outlined">mail</span>
+                <a href="mailto:support@leadpulse.com">support&#64;leadpulse.com</a>
+              </li>
+              <li>
+                <span class="material-symbols-outlined">call</span>
+                <a href="tel:+918065938728">+91 8065938728</a>
+              </li>
+              <li>
+                <span class="material-symbols-outlined">schedule</span>
+                <span>Mon-Fri, 10am to 5pm</span>
+              </li>
+            </ul>
+            <div class="social-icons">
+              <a href="#" target="_blank" class="social-btn">
+                <span class="material-symbols-outlined">public</span>
+              </a>
+              <a href="#" target="_blank" class="social-btn">
+                <span class="material-symbols-outlined">share</span>
+              </a>
+              <a href="#" target="_blank" class="social-btn">
+                <span class="material-symbols-outlined">groups</span>
+              </a>
+            </div>
           </div>
         </div>
         <p class="copy-text">&copy; 2026 LeadPulse Technologies. Built for premium business lead capture.</p>
@@ -2277,25 +2331,40 @@ import { FormsModule } from '@angular/forms';
     .footer {
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 50px;
       border-top: 1px solid var(--dark-border);
-      padding: 60px 0 30px 0;
-      margin-top: 40px;
+      padding: 80px 0 40px 0;
+      margin-top: 60px;
     }
 
-    .footer-links {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 600px) {
-      .footer-links {
-        flex-direction: column;
-        align-items: center;
+      .footer-grid {
+        grid-template-columns: 1fr;
         text-align: center;
+      }
+      .footer-brand {
+        justify-content: center;
+      }
+      .quick-links-group {
+        justify-content: center;
+      }
+      .contact-list li {
+        justify-content: center;
+      }
+      .social-icons {
+        justify-content: center;
       }
     }
 
@@ -2304,18 +2373,55 @@ import { FormsModule } from '@angular/forms';
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 800;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .brand-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 0 20px 0;
+    }
+
+    .quick-links-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    .quick-links-group a {
+      color: var(--accent-purple);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition-smooth);
+    }
+
+    .quick-links-group a:hover {
       color: white;
     }
 
-    .links-row {
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
+    .footer-col h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+      margin: 0 0 20px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .links-row a {
+    .footer-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-list a {
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.9rem;
@@ -2323,8 +2429,56 @@ import { FormsModule } from '@angular/forms';
       transition: var(--transition-smooth);
     }
 
-    .links-row a:hover {
+    .footer-list a:hover {
       color: var(--accent-purple);
+    }
+
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .contact-list li a {
+      color: var(--text-muted);
+    }
+
+    .contact-list .material-symbols-outlined {
+      font-size: 18px;
+      color: var(--accent-purple);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .social-btn:hover {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    .social-btn .material-symbols-outlined {
+      font-size: 18px;
     }
 
     .copy-text {
