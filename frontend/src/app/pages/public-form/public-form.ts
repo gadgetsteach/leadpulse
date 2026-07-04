@@ -470,6 +470,8 @@ export class PublicFormComponent implements OnInit {
   readonly formTitle = signal('');
   readonly formDescription = signal('');
   readonly businessName = signal('');
+  whatsappNumber = '';
+  whatsappEnabled = false;
   
   // Questions array
   private readonly rawQuestions = signal<FormQuestion[]>([]);
@@ -523,6 +525,8 @@ export class PublicFormComponent implements OnInit {
         this.formDescription.set(res.description || '');
         this.businessName.set(res.business?.name || 'Partner Business');
         this.rawQuestions.set(res.questions || []);
+        this.whatsappNumber = res.whatsappNumber || '';
+        this.whatsappEnabled = res.whatsappEnabled || false;
         
         // Dynamically set Meta tags for SEO ranking
         this.title.setTitle(res.metaTitle || `${res.title} | LeadPulse`);
@@ -644,12 +648,49 @@ export class PublicFormComponent implements OnInit {
       next: () => {
         this.isSubmitting.set(false);
         this.isSubmitted.set(true);
+        if (this.whatsappEnabled && this.whatsappNumber) {
+          this.redirectToWhatsApp();
+        }
       },
       error: (err) => {
         this.isSubmitting.set(false);
         alert(err.error?.error || 'Failed to submit inquiry. Please review entries and try again.');
       }
     });
+  }
+
+  redirectToWhatsApp(): void {
+    let text = `*New Lead captured via LeadPulse*\n\n`;
+    text += `*Form:* ${this.formTitle()}\n`;
+    text += `*Name:* ${this.contactName}\n`;
+    text += `*Phone:* ${this.contactPhone}\n`;
+    text += `*Email:* ${this.contactEmail}\n`;
+    if (this.contactNotes) {
+      text += `*Notes:* ${this.contactNotes}\n`;
+    }
+    text += `\n*Answers:*\n`;
+
+    this.rawQuestions().forEach((q) => {
+      const ans = this.answers[q.id];
+      let displayAns = ans;
+      if (q.questionType === 'checkbox') {
+        try {
+          const list = JSON.parse(ans || '[]');
+          displayAns = list.join(', ');
+        } catch (e) {
+          displayAns = ans;
+        }
+      }
+      text += `• _${q.questionText}_: ${displayAns || 'N/A'}\n`;
+    });
+
+    const encodedText = encodeURIComponent(text);
+    const cleanNumber = this.whatsappNumber.replace(/[^0-9]/g, '');
+    const url = `https://wa.me/${cleanNumber}?text=${encodedText}`;
+
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1500);
   }
 
   resetForm(): void {

@@ -30,6 +30,8 @@ model Form {
   createdAt       DateTime       @default(now())
   metaTitle       String?
   metaDescription String?
+  whatsappNumber  String?
+  whatsappEnabled Boolean        @default(false)
   questions       FormQuestion[]
   leads           Lead[]
 }

@@ -56,6 +56,9 @@ interface BuilderQuestion {
             <button [class.active]="activeSettingsTab() === 'seo'" (click)="activeSettingsTab.set('seo')">
               SEO Optimization
             </button>
+            <button [class.active]="activeSettingsTab() === 'whatsapp'" (click)="activeSettingsTab.set('whatsapp')">
+              WhatsApp
+            </button>
           </div>
 
           <div class="tab-content" *ngIf="activeSettingsTab() === 'general'">
@@ -98,6 +101,28 @@ interface BuilderQuestion {
               <div class="public-url-display">
                 http://localhost:4200/f/{{ formSlug() }}
               </div>
+            </div>
+          </div>
+
+          <div class="tab-content" *ngIf="activeSettingsTab() === 'whatsapp'">
+            <div class="seo-alert">
+              <span class="material-symbols-outlined">chat</span>
+              <p>When clients complete this form, they will be redirected to WhatsApp to send their details directly to your number.</p>
+            </div>
+
+            <div class="form-group toggle-group">
+              <label>
+                <input type="checkbox" [(ngModel)]="whatsappEnabled">
+                Enable WhatsApp Redirection
+              </label>
+            </div>
+
+            <div class="form-group" *ngIf="whatsappEnabled()">
+              <label for="whatsappNumber">WhatsApp Phone Number</label>
+              <input type="text" id="whatsappNumber" [(ngModel)]="whatsappNumber" placeholder="e.g. 919876543210 (include country code)">
+              <p class="input-helper" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+                Enter digits only (no spaces, dashes, or + signs). E.g. 919876543210.
+              </p>
             </div>
           </div>
         </div>
@@ -490,6 +515,8 @@ export class FormBuilderComponent implements OnInit {
   isActive = signal(true);
   metaTitle = signal('');
   metaDescription = signal('');
+  whatsappNumber = signal('');
+  whatsappEnabled = signal(false);
 
   readonly questions = signal<BuilderQuestion[]>([]);
   readonly activeSettingsTab = signal('general');
@@ -525,6 +552,8 @@ export class FormBuilderComponent implements OnInit {
         this.isActive.set(res.isActive);
         this.metaTitle.set(res.metaTitle || '');
         this.metaDescription.set(res.metaDescription || '');
+        this.whatsappNumber.set(res.whatsappNumber || '');
+        this.whatsappEnabled.set(res.whatsappEnabled || false);
 
         // Map database questions to local builder model
         const mappedQuestions = res.questions.map((q: any) => {
@@ -627,6 +656,8 @@ export class FormBuilderComponent implements OnInit {
       isActive: this.isActive(),
       metaTitle: this.metaTitle(),
       metaDescription: this.metaDescription(),
+      whatsappNumber: this.whatsappNumber(),
+      whatsappEnabled: this.whatsappEnabled(),
       // Send the questions list (will recreate/update them based on our controller design)
       questions: this.questions().map((q) => ({
         id: q.id,

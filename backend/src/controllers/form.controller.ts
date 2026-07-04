@@ -111,7 +111,7 @@ export const updateForm = async (req: AuthenticatedRequest, res: Response): Prom
   try {
     const businessId = req.businessId;
     const id = req.params.id as string;
-    const { title, description, isActive, metaTitle, metaDescription, questions } = req.body;
+    const { title, description, isActive, metaTitle, metaDescription, questions, whatsappNumber, whatsappEnabled } = req.body;
 
     if (!businessId) {
       res.status(401).json({ error: 'Unauthorized' });
@@ -132,6 +132,8 @@ export const updateForm = async (req: AuthenticatedRequest, res: Response): Prom
         isActive,
         metaTitle,
         metaDescription,
+        whatsappNumber,
+        whatsappEnabled,
       },
     });
 
