@@ -635,16 +635,18 @@ import { FormsModule } from '@angular/forms';
       left: 0;
       width: 100vw;
       height: 100vh;
-      z-index: -1;
+      z-index: 1;
       background: 
-        radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 85% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
-        radial-gradient(rgba(255, 255, 255, 0.007) 1.5px, transparent 1.5px);
+        radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+        radial-gradient(rgba(255, 255, 255, 0.015) 1.5px, transparent 1.5px);
       background-size: 100% 100%, 100% 100%, 32px 32px;
       pointer-events: none;
     }
 
     .home-container {
+      position: relative;
+      z-index: 2;
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
