@@ -715,6 +715,29 @@ import { FormsModule } from '@angular/forms';
       }
     }
 
+    @media (max-width: 600px) {
+      .nav-bar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+        top: 10px;
+        margin-bottom: -20px;
+      }
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .nav-brand {
+        width: 100%;
+        justify-content: center;
+      }
+      .home-container {
+        padding: 10px;
+      }
+    }
+
     .badge {
       display: inline-block;
       padding: 6px 14px;
